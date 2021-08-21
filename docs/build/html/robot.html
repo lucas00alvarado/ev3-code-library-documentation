@@ -1,0 +1,401 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<meta content="Docutils 0.17.1: http://docutils.sourceforge.net/" name="generator"/>
+<title>
+      Robot | EV3 Code Library 0.1 documentation
+    </title>
+<link href="_static/pygments.css" rel="stylesheet"/>
+<link href="_static/theme.css" rel="stylesheet"/>
+<link href="search.html" rel="search" title="Search"/>
+<link href="genindex.html" rel="index" title="Index"/>
+<link href="quickstart.html" rel="prev" title="Quickstart"/>
+</head><body class="text-gray-900 antialiased">
+<div class="h-screen md:grid md:grid-layout" id="page">
+<a class="block text-xl bg-white px-8 py-4 z-20 absolute top-0 inset-x-0 text-center transform -translate-y-full focus:translate-y-0 focus:outline-none transition-transform duration-75" href="#robot" title="Skip navigation links">Skip to content</a>
+<header class="grid-area-header z-10">
+<div class="bg-gray-900 shadow-md flex justify-between items-center z-10">
+<a aria-label="Back to homepage" class="hover:bg-gray-700 focus:bg-gray-700 tooltipped tooltipped-se" href="index.html">
+<h2 class="text-xl text-gray-100 mx-5 py-4">EV3 Code Library 0.1 documentation</h2>
+</a>
+<form action="search.html" class="hidden md:flex my-auto mx-5 justify-between items-center print:hidden" id="searchbox" method="get">
+<input aria-label="Search the docs" class="p-2 flex-1 focus:bg-yellow-50 rounded-none" id="search-input" name="q" placeholder="Search the docs" style="width: 300px;" type="search"/>
+<button aria-label="Get search results" class="p-2 text-white bg-gray-700 hover:bg-gray-200 hover:text-pink-500 focus:bg-gray-200 focus:text-pink-500 tooltipped tooltipped-sw">
+<svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+</button>
+</form>
+</div>
+</header><aside class="grid-area-sidebar h-full fixed md:relative inset-y-0 left-0 z-20 md:z-0 print:hidden overflow-y-auto transition-all transform transform-gpu -translate-x-full opacity-0 duration-300 md:translate-x-0 md:opacity-100" id="sidebar">
+<nav class="h-full overflow-y-auto bg-white text-gray-700 border-r pt-16 flex flex-col" role="navigation">
+<div class="nav-toc flex-1 px-5"><ul class="current">
+<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="quickstart.html">Quickstart</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="quickstart.html#installation">Installation</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="quickstart.html#imports">Imports</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="quickstart.html#initialize-robot-class">Initialize Robot Class</a></div></li>
+</ul>
+</li>
+<li class="toctree-l1 current expanded"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="current reference internal" href="#">Robot</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#id1">Robot</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#follow-until-black">follow_until_black</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#follow-until-white">follow_until_white</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#single-follow-distance">single_follow_distance</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#double-follow-distance">double_follow_distance</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#gyro-straight">gyro_straight</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#gyro-turn">gyro_turn</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#square-line">square_line</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#stop-on-color">stop_on_color</a></div></li>
+</ul>
+</li>
+</ul>
+</div>
+<button aria-label="Close menu" class="text-4xl text-gray-800 p-4 bottom-0 hover:text-pink-500 md:hidden focus:text-pink-500 self-center" id="closeSidebar" title="Close menu">
+<svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</aside>
+<main class="px-5 lg:ml-fluid grid-area-main overflow-y-auto flex flex-col h-full"><nav aria-label="breadcrumbs" class="mt-16 mb-12 text-sm text-gray-700 leading-tight print:hidden" role="navigation">
+<a class="text-blue-700" href="index.html">EV3 Code Library 0.1 documentation</a>
+<span class="text-gray-700 mr-1">/</span><span aria-current="page">Robot</span>
+</nav>
+<article class="flex-1" role="main">
+<section id="robot">
+<h1>Robot<a aria-label="Copy link to section: Robot." class="headerlink tooltipped tooltipped-ne" href="#robot" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
+<section id="id1">
+<h2>Robot<a aria-label="Copy link to section: Robot." class="headerlink tooltipped tooltipped-ne" href="#id1" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">python</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="fm">__init__</span><span class="p">(</span><span class="n">left_motor_port</span><span class="p">,</span> <span class="n">right_motor_port</span><span class="p">,</span> <span class="n">left_sensor_port</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">right_sensor_port</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">back_sensor_port</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gyro_sensor_port</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">motor1_port</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">motor2_port</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+<p>A class that contains all of the functions that the ev3 should need to use. It has functionality for line followers,
+gyro sensor programs, driving, and more. Also contains all of the sensor and motor objects so that all of it only needs
+to be initialized once when the Robot class is initialized. Some of the methods inside of this class will only work if
+you have passed in the ports for all of the sensors and motors.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">left_motor_port</dt>
+<dd class="field-odd"><p>port for the left driving motor. Values: OUTPUT_A, OUTPUT_B, OUTPUT_C, OUTPUT_D</p>
+</dd>
+<dt class="field-even">right_motor_port</dt>
+<dd class="field-even"><p>port for the right driving motor. Values: OUTPUT_A, OUTPUT_B, OUTPUT_C, OUTPUT_D</p>
+</dd>
+<dt class="field-odd">left_sensor_port</dt>
+<dd class="field-odd"><p>port for the left color sensor. Values: INPUT_1, INPUT_2, INPUT_3, INPUT_4</p>
+</dd>
+<dt class="field-even">right_sensor_port</dt>
+<dd class="field-even"><p>port for the right color sensor. Values: INPUT_1, INPUT_2, INPUT_3, INPUT_4</p>
+</dd>
+<dt class="field-odd">back_sensor_port</dt>
+<dd class="field-odd"><p>port for the back color sensor. Values: INPUT_1, INPUT_2, INPUT_3, INPUT_4</p>
+</dd>
+<dt class="field-even">gyro_sensor_port</dt>
+<dd class="field-even"><p>port for the gyro sensor. Values: INPUT_1, INPUT_2, INPUT_3, INPUT_4</p>
+</dd>
+<dt class="field-odd">motor1_port</dt>
+<dd class="field-odd"><p>port for one of the attachment motors. Values: OUTPUT_A, OUTPUT_B, OUTPUT_C, OUTPUT_D</p>
+</dd>
+<dt class="field-even">motor2_port</dt>
+<dd class="field-even"><p>port for one of the attachment motors. Values: OUTPUT_A, OUTPUT_B, OUTPUT_C, OUTPUT_D</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="follow-until-black">
+<h2>follow_until_black<a aria-label="Copy link to section: follow_until_black." class="headerlink tooltipped tooltipped-ne" href="#follow-until-black" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">python</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="n">follow_until_black</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color_sensor</span><span class="p">:</span> <span class="n">ColorSensor</span><span class="p">,</span> <span class="n">stop_sensor</span><span class="p">:</span> <span class="n">ColorSensor</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">rli</span><span class="p">,</span> <span class="n">kp</span><span class="p">,</span> <span class="n">ki</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">kd</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+<p>Allows you to follow a line until the other color sensor hits black.
+You have to use negative PID values if you are line following on the left side of a line</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">color_sensor</dt>
+<dd class="field-odd"><p>the color sensor object that you would like to follow the line</p>
+</dd>
+<dt class="field-even">stop_sensor</dt>
+<dd class="field-even"><p>the color sensor object to detect black</p>
+</dd>
+<dt class="field-odd">speed</dt>
+<dd class="field-odd"><p>speed for line following. Use a negative value to go backwards</p>
+</dd>
+<dt class="field-even">rli</dt>
+<dd class="field-even"><p>the rli that you would like for the robot to try to stay on. Go to <a class="reference external" href="https://docs.google.com/document/d/1oJ3-Bsqdp4RnKgrdCS8U93gZ9PlmqChw0xg6aUa2zJY/edit?usp=sharing">https://docs.google.com/document/d/1oJ3-Bsqdp4RnKgrdCS8U93gZ9PlmqChw0xg6aUa2zJY/edit?usp=sharing<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> to learn more.</p>
+</dd>
+<dt class="field-odd">kp</dt>
+<dd class="field-odd"><p>sharpness of corrections in the line follower.</p>
+</dd>
+<dt class="field-even">ki</dt>
+<dd class="field-even"><p>makes sure that your corrections keep you on a straight line. DON’T USE WITH TURNS</p>
+</dd>
+<dt class="field-odd">kd</dt>
+<dd class="field-odd"><p>keeps your turning from continuing to swing back and forth</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="follow-until-white">
+<h2>follow_until_white<a aria-label="Copy link to section: follow_until_white." class="headerlink tooltipped tooltipped-ne" href="#follow-until-white" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">python</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="n">follow_until_white</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color_sensor</span><span class="p">:</span> <span class="n">ColorSensor</span><span class="p">,</span> <span class="n">stop_sensor</span><span class="p">:</span> <span class="n">ColorSensor</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">rli</span><span class="p">,</span> <span class="n">kp</span><span class="p">,</span> <span class="n">ki</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">kd</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+<p>Allows you to follow a line until the other color sensor hits white.
+You have to use negative PID values if you are line following on the left side of a line</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">color_sensor</dt>
+<dd class="field-odd"><p>the color sensor object that you would like to follow the line</p>
+</dd>
+<dt class="field-even">stop_sensor</dt>
+<dd class="field-even"><p>the color sensor object to detect white</p>
+</dd>
+<dt class="field-odd">speed</dt>
+<dd class="field-odd"><p>speed for line following. Use a negative value to go backwards</p>
+</dd>
+<dt class="field-even">rli</dt>
+<dd class="field-even"><p>the rli that you would like for the robot to try to stay on. Go to <a class="reference external" href="https://docs.google.com/document/d/1oJ3-Bsqdp4RnKgrdCS8U93gZ9PlmqChw0xg6aUa2zJY/edit?usp=sharing">https://docs.google.com/document/d/1oJ3-Bsqdp4RnKgrdCS8U93gZ9PlmqChw0xg6aUa2zJY/edit?usp=sharing<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> to learn more.</p>
+</dd>
+<dt class="field-odd">kp</dt>
+<dd class="field-odd"><p>sharpness of corrections in the line follower.</p>
+</dd>
+<dt class="field-even">ki</dt>
+<dd class="field-even"><p>makes sure that your corrections keep you on a straight line. DON’T USE WITH TURNS</p>
+</dd>
+<dt class="field-odd">kd</dt>
+<dd class="field-odd"><p>keeps your turning from continuing to swing back and forth</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="single-follow-distance">
+<h2>single_follow_distance<a aria-label="Copy link to section: single_follow_distance." class="headerlink tooltipped tooltipped-ne" href="#single-follow-distance" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">python</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="n">single_follow_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color_sensor</span><span class="p">:</span> <span class="n">ColorSensor</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">distance</span><span class="p">,</span> <span class="n">rli</span><span class="p">,</span> <span class="n">kp</span><span class="p">,</span> <span class="n">ki</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">kd</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+<p>Allows you to follow a line with 1 color sensor for a distance. You have to use negative PID values if you are line following on the left side of a line</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">color_sensor</dt>
+<dd class="field-odd"><p>the color sensor object that you would like to follow the line</p>
+</dd>
+<dt class="field-even">speed</dt>
+<dd class="field-even"><p>speed for line following. Use a negative value to go backwards</p>
+</dd>
+<dt class="field-odd">distance</dt>
+<dd class="field-odd"><p>distance to line follow for in rotations. Use a negative value to go backwards</p>
+</dd>
+<dt class="field-even">rli</dt>
+<dd class="field-even"><p>the rli that you would like for the robot to try to stay on. Go to <a class="reference external" href="https://docs.google.com/document/d/1oJ3-Bsqdp4RnKgrdCS8U93gZ9PlmqChw0xg6aUa2zJY/edit?usp=sharing">https://docs.google.com/document/d/1oJ3-Bsqdp4RnKgrdCS8U93gZ9PlmqChw0xg6aUa2zJY/edit?usp=sharing<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> to learn more</p>
+</dd>
+<dt class="field-odd">kp</dt>
+<dd class="field-odd"><p>sharpness of corrections in the line follower</p>
+</dd>
+<dt class="field-even">ki</dt>
+<dd class="field-even"><p>makes sure that your corrections keep you on a straight line. DON’T USE WITH TURNS</p>
+</dd>
+<dt class="field-odd">kd</dt>
+<dd class="field-odd"><p>keeps your turning from continuing to swing back and forth</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="double-follow-distance">
+<h2>double_follow_distance<a aria-label="Copy link to section: double_follow_distance." class="headerlink tooltipped tooltipped-ne" href="#double-follow-distance" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">python</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="n">double_follow_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">distance</span><span class="p">,</span> <span class="n">kp</span><span class="p">,</span> <span class="n">ki</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">kd</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+<p>Allows you to follow a line with 2 color sensors for a distance</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">speed</dt>
+<dd class="field-odd"><p>speed for line following</p>
+</dd>
+<dt class="field-even">distance</dt>
+<dd class="field-even"><p>distance to line follow for in rotations</p>
+</dd>
+<dt class="field-odd">kp</dt>
+<dd class="field-odd"><p>sharpness of corrections in the line follower</p>
+</dd>
+<dt class="field-even">ki</dt>
+<dd class="field-even"><p>makes sure that your corrections keep you on a straight line. DON’T USE WITH TURNS</p>
+</dd>
+<dt class="field-odd">kd</dt>
+<dd class="field-odd"><p>keeps your turning from continuing to swing back and forth</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="gyro-straight">
+<h2>gyro_straight<a aria-label="Copy link to section: gyro_straight." class="headerlink tooltipped tooltipped-ne" href="#gyro-straight" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">python</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="n">gyro_straight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">distance</span><span class="p">,</span> <span class="n">kp</span><span class="p">,</span> <span class="n">ki</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">kd</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+<p>Allows you to drive in a straight line using a gyro sensor. You have to use negative PID values if going backwards.
+You should also reset your gyro sensor with the command robot.gyro_sensor.reset() unless you want to follow a previous
+reset.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">speed</dt>
+<dd class="field-odd"><p>speed for driving. Use a negative value to go backwards</p>
+</dd>
+<dt class="field-even">distance</dt>
+<dd class="field-even"><p>distance to drive for in rotations. Use a negative value to go backwards</p>
+</dd>
+<dt class="field-odd">kp</dt>
+<dd class="field-odd"><p>sharpness of corrections in your driving</p>
+</dd>
+<dt class="field-even">ki</dt>
+<dd class="field-even"><p>makes sure that your corrections keep you on a straight line</p>
+</dd>
+<dt class="field-odd">kd</dt>
+<dd class="field-odd"><p>keeps your turning from continuing to swing back and forth</p>
+</dd>
+<dt class="field-even">angle</dt>
+<dd class="field-even"><p>the gyro sensor angle that you want to follow the line at</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="gyro-turn">
+<h2>gyro_turn<a aria-label="Copy link to section: gyro_turn." class="headerlink tooltipped tooltipped-ne" href="#gyro-turn" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">python</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="n">gyro_turn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">left_speed</span><span class="p">,</span> <span class="n">right_speed</span><span class="p">,</span> <span class="n">buffer</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+<p>Allows you to turn a specific angle using the gyro sensor. You should reset your gyro sensor with the command
+robot.gyro_sensor.reset() unless you want to turn using a previous reset</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">angle</dt>
+<dd class="field-odd"><p>gyro angle to turn to. Use a negative value if turning counter-clockwise</p>
+</dd>
+<dt class="field-even">left_speed</dt>
+<dd class="field-even"><p>the speed that the left wheel should drive at during the turn</p>
+</dd>
+<dt class="field-odd">right_speed</dt>
+<dd class="field-odd"><p>the speed that the right wheel should drive at during the turn</p>
+</dd>
+<dt class="field-even">buffer</dt>
+<dd class="field-even"><p>the amount of buffer in degrees that it can be on either side of the angle</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="square-line">
+<h2>square_line<a aria-label="Copy link to section: square_line." class="headerlink tooltipped tooltipped-ne" href="#square-line" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">python</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="n">square_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">)</span>
+</code></pre></div>
+<p>Allows the robot to square up on a black line so that the color sensors are parallel to the line</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">speed</dt>
+<dd class="field-odd"><p>the speed to drive at during the square up</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="stop-on-color">
+<h2>stop_on_color<a aria-label="Copy link to section: stop_on_color." class="headerlink tooltipped tooltipped-ne" href="#stop-on-color" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">python</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="n">stop_on_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color_name</span><span class="p">,</span> <span class="n">left_speed</span><span class="p">,</span> <span class="n">right_speed</span><span class="p">,</span> <span class="n">single_sensor</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sensor</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+<p>Allows you to have the robot drive and then stop on a certain color</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">color_name</dt>
+<dd class="field-odd"><p>the color to stop on. Values: No color, Black, Blue, Green, Yellow, Red, White, and Brown</p>
+</dd>
+<dt class="field-even">left_speed</dt>
+<dd class="field-even"><p>the speed that the left wheel should drive at</p>
+</dd>
+<dt class="field-odd">right_speed</dt>
+<dd class="field-odd"><p>the speed that the right wheel should drive at</p>
+</dd>
+<dt class="field-even">single_sensor</dt>
+<dd class="field-even"><p>whether it should be waiting for a specific sensor or for one of the front two</p>
+</dd>
+<dt class="field-odd">sensor</dt>
+<dd class="field-odd"><p>the sensor to wait for if single_sensor is True</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+</section>
+</article>
+<footer>
+<div class="mt-20 mb-4 text-sm text-gray-700">© 2021, Lucas Alvarado Made with <a href="https://www.sphinx-doc.org">Sphinx 4.1.2</a></div>
+</footer>
+</main>
+<div class="sticky bottom-0 md:hidden print:hidden bg-white">
+<div class="flex justify-center items-center">
+<button aria-labelledby="menuLabel" class="text-3xl p-4 flex items-center focus:bg-gray-200" id="openSidebar">
+<svg aria-hidden="true" class="fill-current h-8 w-8" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
+<span class="pl-2 text-sm font-medium uppercase tracking-wide text-gray-700" id="menuLabel">Menu</span>
+</button><button aria-labelledby="searchLabel" class="text-3xl p-4 flex items-center focus:bg-gray-200" id="openSearch">
+<svg aria-hidden="true" class="fill-current h-8 w-8" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+<span class="pl-2 text-sm font-medium uppercase tracking-wide text-gray-700" id="searchLabel">Search</span>
+</button>
+</div>
+</div>
+<div class="w-full fixed bottom-0 left-0 z-10 bg-gray-900 overflow-x-hidden pt-10 flex flex-col items-center md:hidden transition-all opacity-0 transform transform-gpu translate-y-full duration-300" id="search-pane">
+<h4 class="text-xl text-white mb-4" id="search-label">Enter search term</h4><form action="search.html" class="flex w-full justify-between items-center max-w-sm px-12" id="searchbox" method="get">
+<input aria-labelledby="search-label" class="p-2 flex-1 rounded-none" name="q" placeholder="Search the docs" type="search"/>
+<button aria-label="Get search results" class="p-2 text-white bg-gray-700 hover:bg-gray-200 hover:text-pink-500 focus:bg-gray-200 focus:text-pink-500 tooltipped tooltipped-sw">
+<svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+</button>
+</form>
+<button aria-label="Close menu" class="text-4xl text-gray-200 p-4 bottom-0 hover:text-pink-500 md:hidden focus:text-pink-500 self-center" id="closeSearch" title="Close menu">
+<svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</div>
+<button class="fixed bottom-0 right-0 opacity-0 p-4 m-4 tracking-wide bg-gray-900 text-gray-100 transition transform transform-gpu duration-500 translate-y-full" id="snackbar">
+  Clear highlights
+</button><div class="fixed hidden inset-0 bg-black bg-opacity-50" id="screen"></div>
+</div>
+<script data-url_root="./" id="documentation_options" src="_static/documentation_options.js">
+</script>
+<script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+<script src="_static/jquery.js"></script>
+<script src="_static/underscore.js"></script>
+<script src="_static/doctools.js"></script>
+<script defer="" src="_static/theme.js"></script>
+</body>
+</html>
